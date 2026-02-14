@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airsoft Battle Entry</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c1118;
+      --panel: #111a24;
+      --accent: #4ddf90;
+      --accent-hover: #5cf5a0;
+      --danger: #ff6464;
+      --text: #e9f0f7;
+      --muted: #9eb0c2;
+      --ring: rgba(77, 223, 144, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #18283a 0%, var(--bg) 55%);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+    }
+
+    .card {
+      width: min(420px, 100%);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      background: var(--accent);
+      color: #08140d;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    #status {
+      margin-top: 1rem;
+      min-height: 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    #status.error {
+      color: var(--danger);
+    }
+
+    #status.success {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Welcome to Airsoft Battle</h1>
+    <p>Enter the battle passcode to deploy to the game lobby.</p>
+
+    <form id="entry-form" autocomplete="off">
+      <label for="password">Battle Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter password" required />
+      <button type="submit">Enter Game</button>
+    </form>
+
+    <div id="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    const BATTLE_PASSWORD = "alpha-strike";
+    const form = document.getElementById("entry-form");
+    const passwordInput = document.getElementById("password");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = passwordInput.value.trim();
+
+      if (value === BATTLE_PASSWORD) {
+        status.textContent = "Access granted. Welcome to the battlefield!";
+        status.className = "success";
+      } else {
+        status.textContent = "Access denied. Incorrect password.";
+        status.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>
